@@ -1,0 +1,1715 @@
+实验一报告
+
+回答问题
+
+请一边熟悉sakila数据库，一边回答以下问题：
+
+1.	sakila.mwb模型中，表结构里每个字段前面的小标记分别表示什么意思？ （观察字段的属性）
+
+address
+
+ddress_id SMALLINT
+
+address VAR:CHAR(50)
+
+ddreis2 YARCHAR,50)
+
+distict VAR:OAR(20)
+
+Sly_id SMALLINT
+
+osts
+
+_code VAROHAR(10)
+
+phone VAROHAR(20)
+
+xation GEOMETRT
+
+t_updateTMESTAMP
+
+adexes标记
+
+意义
+
+用来唯一标识表中每一行的键。
+
+表的属性，其值必须存在
+
+表的可选属性，即在某些情况下其值为空
+
+该属性为外键，受外键约束且必须不为空
+
+2.	char和varchar类型的区别是什么？
+
+language
+
+langua ge
+
+：Id TINYINT
+
+name
+
+CHAR(20)
+
+last_update TIMESTAMP
+
+Indexesactor
+
+actor_id
+
+SMALLINT
+
+first_name VARCHAR(45)
+
+last_name VARCHAR（45)
+
+last_update TIMESTAMP
+
+IndexesCHAR类型的字段长度是固定的，长度为n。即使存储的字符串长度小于 n，数据库也会用空格（spaces）来填充
+
+而VARCHAR长度可变，节省存储空间来的
+
+3.	图中哪部分体现影片-演员关系？换句话说，如果要找出演某个影片的演员名字，访问哪几张表可以获得信息？
+
+film，actor，以及film_actor做到了二者的联结
+
+4.	如果已知某个顾客姓名，要找到他租借的所有影片名，需要访问哪几张表？
+
+customer表，rental表，inventory表以及film表
+
+实验截图
+
+（请注意粘贴文本格式的SQL语句，截图执行结果和Output窗口）
+
+请列出所有country是“France”的客户的信息，显示customer_id、客户姓名、地址、所在区域，所在城市（注意：客户姓名请以first_name+空格+last_name的格式，例如：SISSY SOBIESKI）；
+
+SELECT customer.customer_id,
+
+CONCAT(customer.first_name, ' ', customer.last_name) AS customer_name,
+
+CONCAT_WS(' ', address.address, address.address2) AS customer_address,
+
+address.district,
+
+city.city
+
+FROM customer
+
+JOIN address ON customer.address_id = address.address_id
+
+JOIN city ON address.city_id = city.city_id
+
+JOIN country ON city.country_id = country.country_id
+
+WHERE country.country = 'France';
+
+Query 1
+
+actor
+
+Limitto1000rows
+
+address.district,
+
+5
+
+city.city
+
+6
+
+FROM
+
+Icustomer
+
+JOIN
+
+Iaddress oN customer.address_id = address.address_id
+
+JOIN
+
+Icity
+
+ON address.city_id = city.city_id
+
+9
+
+JOIN
+
+country oN city.country_id = country.country_id
+
+10
+
+WHERE
+
+country.country ='France';
+
+11
+
+100%
+
+1:11
+
+Result Grid
+
+Filter Rows:
+
+Search
+
+Export:
+
+customer_id customer_name
+
+customer_address
+
+district
+
+city
+
+Result
+
+Grid
+
+402
+
+LUISYANEZ
+
+1346MysoreDrive
+
+Bretagne
+
+Brest
+
+162
+
+LAUREN HUDSON
+
+1740 Le Mans Loop
+
+Pays de la Loire
+
+Le Mans
+
+104
+
+RITAGRAHAM
+
+1386YangorAvenue
+
+Provence-Alpes-Cte
+
+Toulon
+
+35
+
+VIRGINIAGREEN
+
+391CallaoDrive
+
+Midi-Pyrnes
+
+Form
+
+Editor
+
+Field
+
+Types
+
+列出属于“Children”类型并以“J”开头的电影名；
+
+select film.title
+
+from film
+
+join film_category on film.film_id = film_category.film_id
+
+join category on film_category.category_id = category.category_id
+
+where category.name = 'Children' and  film.title like 'J%'
+
+Query 1
+
+actor
+
+Limit to 1000 rows
+
+列出属于“Children"类型并以“J"开头的电影名；
+
+select film.title
+
+m
+
+from
+
+film
+
+4
+
+join
+
+film_category on film.film_id = film_category.film_id
+
+5
+
+join
+
+category on film_category.category_id = category.category_id
+
+6
+
+where category.name = 'Children' and
+
+film.title like'J%
+
+100%
+
+1:1
+
+Result Grid
+
+Filter Rows:
+
+Search
+
+Export:
+
+title
+
+Result
+
+Grid
+
+JERSEYSASSY
+
+JUMPINGWRATH
+
+Form
+
+Editor
+
+找出费用在180至200之间的客户，列出他们的first_name, last_name和每个人花费的金额；
+
+select customer.first_name as first_name,
+
+customer.last_name,
+
+sum(payment.amount)
+
+from payment
+
+join customer on customer.customer_id = payment.customer_id
+
+group by customer.customer_id
+
+having sum(payment.amount) between 180 and 200
+
+Query 1
+
+actor
+
+Limit to 1000 rows
+
+selectcustomer.first_name
+
+as
+
+first_name,
+
+customer.last_name,
+
+sum(payment.amount)
+
+6
+
+from
+
+1payment
+
+00
+
+join
+
+customer on customer.customer_id = payment.customer_id
+
+9
+
+group by
+
+customer.customer_id
+
+10
+
+having sum(payment.amount）
+
+between180and200
+
+100%
+
+30:9
+
+Result Grid
+
+Filter Rows:
+
+Search
+
+Export:
+
+first_name last_name
+
+sum(payment.amou...
+
+Result
+
+Grid
+
+RHONDA
+
+KENNEDY
+
+194.61
+
+CLARA
+
+SHAW
+
+195.58
+
+MARION
+
+SNYDER
+
+194.61
+
+TOMMY
+
+COLLAZO
+
+186.62
+
+Form
+
+Editor
+
+Field
+
+Types哪个影片获得了总体最高的租金？请列出影片id、影片名、总租金；
+
+select film.film_id,
+
+film.title,
+
+sum(payment.amount) as total_rental_payment
+
+from film
+
+join inventory on inventory.film_id = film.film_id
+
+join rental on rental.inventory_id = inventory.inventory_id
+
+join payment on rental.rental_id = payment.rental_id
+
+group by film.film_id
+
+order by total_rental_payment desc
+
+limit 1
+
+Query 1
+
+actor
+
+Limitto1000rows
+
+哪个影片获得了总体最高的租金？请列出影片id、影片名、总租金;
+
+select film.film_id,
+
+film.title,
+
+sum(payment.amount)
+
+as total_rental_payment
+
+from
+
+film
+
+6
+
+join
+
+inventory on：
+
+inventory.film_id = film.film_id
+
+join
+
+rental on rental.inventory_id = inventory.inventory_id
+
+0
+
+join
+
+payment
+
+t on rental.rental_id = payment.rental_id
+
+9
+
+group by
+
+film.film_id
+
+100%
+
+28:7
+
+Result Grid
+
+Filter Rows:
+
+Search
+
+Export:
+
+Fetch rows:
+
+film_id title
+
+total_rental_paym..
+
+879
+
+TELEGRAPHVOYAGE
+
+231.73哪些演员出演的电影超过38部？ 请列出演员名、出演的电影数；
+
+select concat_ws(" ", actor.first_name, actor.last_name),
+
+count(film.film_id) as total_film_starred
+
+from actor
+
+join film_actor on film_actor.actor_id = actor.actor_id
+
+join film on film.film_id = film_actor.film_id
+
+group by actor.actor_id
+
+having total_film_starred > 28
+
+order by total_film_starred desc
+
+Query 1
+
+actor
+
+Limit to 1000rows
+
+Find
+
+Replace
+
+Found match
+
+actor_id
+
+select
+
+concat_ws(" ",
+
+actor.first_name, actor.last_name),
+
+3
+
+count(film.film_id) as total_film_starred
+
+from
+
+l actor
+
+join
+
+film_actor on film_actor.actor_id = actor.actor_id
+
+join film on film.film_id = film_actor.film_id
+
+group by actor.actor_id
+
+8
+
+having t
+
+total_film_starred > 38
+
+tntal
+
+film
+
+100%
+
+30:8
+
+Result Grid
+
+Filter Rows:
+
+Search
+
+Export:
+
+concat_ws("", actor.first_name, actor.last_n...
+
+total_film_starr..
+
+GINA DEGENERES
+
+42
+
+WALTERTORN
+
+41
+
+MARYKEITEL
+
+40
+
+MATTHEWCARREY
+
+39请找出没有租借过电影《NATURAL STOCK》的顾客姓名；
+
+select concat_ws(' ', customer.first_name, customer.last_name) as customer_name
+
+from customer
+
+where customer.customer_id not in (
+
+select customer.customer_id
+
+from inventory
+
+join film on inventory.film_id = film.film_id
+
+join rental on inventory.inventory_id = rental.inventory_id
+
+join customer on customer.customer_id = rental.customer_id
+
+where film.title = 'NATURAL STOCK'
+
+)
+
+Limit to 1000 rows
+
+2
+
+select concat_ws(' ', customer.first_name, customer.last_name)
+
+as
+
+customer_name
+
+3
+
+from
+
+customer
+
+4
+
+where
+
+customer.customer_id not in
+
+5
+
+select customer.customer_id
+
+６
+
+from :
+
+inventory
+
+7
+
+join
+
+film
+
+on
+
+inventory.film_id = film.film_id
+
+8
+
+join
+
+rental on inventory.inventory_id = rental.inventory_id
+
+６
+
+join
+
+customer on
+
+customer.customer_id = rental.customer_id
+
+10
+
+where
+
+film.title
+
+'NATURAL
+
+STOCK'
+
+100%
+
+16:6
+
+Result Grid
+
+Filter Rows:
+
+Search
+
+Export:
+
+customer_name
+
+AARONSELBY
+
+ADAMGOOCH
+
+ADRIANCLARY
+
+AGNES BISHOP
+
+ALAN KAHN
+
+ALBERTCROUSE
+
+ALBERTOHENNING
+
+ALEXGRESHAM
+
+ALEXANDERFENN...
+
+ALFREDCASILLAS
+
+查询既演过《ELEPHANT TROJAN》又演过《DOGMA FAMILY》的演员，列出其姓名；
+
+select concat_ws(' ', actor.first_name, actor.last_name) as actor_name
+
+from film
+
+join film_actor on film.film_id = film_actor.film_id
+
+join actor on actor.actor_id = film_actor.actor_id
+
+where film.title = 'ELEPHANT TROJAN'
+
+and concat_ws(' ', actor.first_name, actor.last_name) in
+
+(
+
+select concat_ws(' ', actor.first_name, actor.last_name) as actor_name
+
+from film
+
+join film_actor on film.film_id = film_actor.film_id
+
+join actor on actor.actor_id = film_actor.actor_id
+
+where film.title = 'DOGMA FAMILY'
+
+)
+
+鱼
+
+Limitto1000rows
+
+0
+
+select concat_ws(' ',
+
+actor.first_name, actor.last_name)
+
+as
+
+actor_name
+
+from
+
+film
+
+join
+
+film_actor on film.film_id = film_actor.film_id
+
+join actor on actor.actor_id = film_actor.actor_id
+
+where
+
+e film.title='ELEPHANT TROJAN'
+
+and
+
+concat_ws(' ', actor.first_name, actor.last_name)
+
+in
+
+8
+
+select concat_ws(' ', actor.first_name, actor.last_name)
+
+as
+
+actor_name
+
+10
+
+from
+
+film
+
+100%
+
+2:14
+
+Result Grid
+
+Filter Rows:
+
+Search
+
+Export:
+
+actor_name
+
+GINADEGENERES统计每种类型的影片数，显示类型编号、类型名称、该类型影片数；
+
+select category.category_id, category.name, count(film.film_id) as film_number
+
+from film
+
+join film_category on film.film_id = film_category.film_id
+
+join category on category.category_id = film_category.category_id
+
+group by category.category_id
+
+order by film_number desc
+
+Query 3
+
+Limit to 1000rows
+
+统计每种类型的影片数，显示类型编号、类型名称、该类型影片数;
+
+select category.category_id, category.name, count(film.film_id) as film_number
+
+from
+
+film
+
+join
+
+n film_category on film.film_id = film_category.film_id
+
+join
+
+1category
+
+on category.category_id = film_category.category_id
+
+group by
+
+category.category_id
+
+order byf
+
+film_numberdesc
+
+100%
+
+26:7
+
+Result Grid
+
+Filter Rows:
+
+Search
+
+Export:
+
+category_id name
+
+film_number
+
+15
+
+Sports
+
+74
+
+9
+
+Foreign
+
+73
+
+8
+
+Family
+
+69
+
+9
+
+Documentary
+
+68
+
+2
+
+Animation
+
+66
+
+Action
+
+64
+
+13
+
+New
+
+63
+
+Drama
+
+62
+
+10
+
+Games
+
+61
+
+14
+
+Sci-Fi
+
+61
+
+3
+
+Children
+
+60
+
+５
+
+Comedy
+
+58
+
+4
+
+Classics
+
+57
+
+16
+
+Travel
+
+57
+
+Result 8找出最热门的（被最多不同人租借过）影片名，并显示租借人数；
+
+select film.title, count(distinct customer.customer_id) as lease_number
+
+from film
+
+join inventory on inventory.film_id = film.film_id
+
+join rental on rental.inventory_id = inventory.inventory_id
+
+join customer on customer.customer_id = rental.customer_id
+
+group by film.film_id
+
+order by lease_number desc
+
+limit 4
+
+Limit to 1000rows
+
+找出最热门的（被最多不同人租借过）影片名，并显示租借人数
+
+2
+
+select film.title， count(distinct customer.customer_id） as lease_number
+
+3
+
+from
+
+film
+
+4
+
+join
+
+inventory oni
+
+inventory.film_id = film.film_id
+
+５
+
+join
+
+rental on rental.inventory_id = inventory.inventory_id
+
+6
+
+join
+
+customer onc
+
+customer.customer_id = rental.customer_id
+
+group by film.film_id
+
+8
+
+orderbylease_numberdesc
+
+limit 4
+
+100%
+
+8:9
+
+Result Grid
+
+Filter Rows:
+
+Search
+
+Export:
+
+Fetch rows:
+
+title
+
+lease_number
+
+RIDGEMONTSUBMARINE
+
+32
+
+BUCKETBROTHERHOOD
+
+3 2 3
+
+FORWARDTEMPLE
+
+SCALAWAG DUCK
+
+查询单次租借影片时间最长的6位客户，列出其first_name、last_name和当次租借时长（单位秒）；
+
+select
+
+customer.first_name,
+
+customer.last_name,
+
+max(timestampdiff(second, rental.rental_date, rental.return_date))as lease_period
+
+from customer
+
+join rental on rental.customer_id = customer.customer_id
+
+group by customer.customer_id
+
+order by lease_period desc
+
+limit 6
+
+Limitto10o0rows
+
+2
+
+select
+
+customer.first_name,
+
+4
+
+customer.last_name,
+
+5
+
+max(timestampdiff(second, rental.rental_date, rental.return_date))as
+
+lease_period
+
+from
+
+customer
+
+7
+
+join
+
+8
+
+group
+
+by
+
+customer.customer_id
+
+9
+
+order
+
+by
+
+lease_perioddesc
+
+10
+
+limit
+
+6
+
+100%
+
+1:11
+
+Result Grid
+
+Filter Rows:
+
+Search
+
+Export:
+
+Fetch rows:
+
+first_name
+
+last_name
+
+lease_period
+
+MARTIN
+
+BALES
+
+799140
+
+ELAINE
+
+STEVENS
+
+799140
+
+PEARL
+
+GARZA
+
+799080
+
+JAMES
+
+GANNON
+
+799080
+
+VERA
+
+MCCOY
+
+799080
+
+JACQUELINE
+
+LONG
+
+799080
+
+在customer表中新增一条数据，注意customer表与其他表的关系；
+
+首先需要确保插入的customer的address_id和store_id存在：
+
+-- 检查 store 表和address表
+
+select *
+
+from store , address
+
+where store_id = 1 and address.address_id = 1
+
+检查
+
+store
+
+表和address表
+
+select *
+
+from
+
+store , address
+
+wheres
+
+store_id = 1 and
+
+address.address_id = 1
+
+6
+
+8
+
+100%
+
+1:2
+
+Result Grid
+
+Filter Rows:
+
+Search
+
+Export:
+
+store_id
+
+manager_staff...
+
+ad...
+
+last_update
+
+address_idaddress
+
+address2
+
+2districtcity_idpostal_codephonelocationlast_update
+
+2006-02-15 04:57:12
+
+47 MySakila Drive
+
+NULL
+
+Alberta
+
+300
+
+BLOB
+
+2014-09-2522:30:27如上图所示，确实存在，因此可以进行插入
+
+通过查看customer表的属性，发现customer_id是自增长的因此不需要手动设置customer_id的值.
+
+insert into customer (store_id, first_name, last_name, email, address_id, active, create_date, last_update)
+
+values(
+
+1,
+
+'Junkun',
+
+'Yang',
+
+'email@email.com',
+
+1,
+
+true,
+
+now(),
+
+now()
+
+)
+
+i
+
+在customer表中新增一条数据，注意customer表与其他表的关系；
+
+insert
+
+tinto
+
+customer
+
+(store_id，first_name，
+
+last_name,email,address_id,active，create_date,last_update)
+
+values(
+
+'Junkun'
+
+'Yang'
+
+email@email.com'
+
+true,
+
+now()
+
+now()在customer表中新增一条数据，注意customer表与其他表的关系；
+
+2
+
+select
+
+3
+
+from
+
+customer
+
+4
+
+order
+
+by
+
+customer_id
+
+desc
+
+100%
+
+26:4
+
+Result Grid
+
+Filter Rows:
+
+Search
+
+Edit:
+
+Export/lmport:
+
+customer_idstore_id
+
+first_name
+
+last_name
+
+email
+
+address_idactive
+
+create_date
+
+last_update
+
+600
+
+Junkun
+
+Yang
+
+email@email.com
+
+2024-09-2414:30:23
+
+2024-09-2414:30:23
+
+599
+
+AUSTIN
+
+CINTBON
+
+AUSTIN.CINTRO
+
+605
+
+2006-02-14.22:04:37
+
+2006-02-15.04:57:20如图查询可知插入成功
+
+修改刚才在customer表中新增的那条数据；
+
+update customer
+
+set email = 'notAEmail@email.com',
+
+last_update = now()
+
+where customer_id = 600;
+
+Limitto1000rows
+
+update
+
+customer
+
+2
+
+set
+
+email =
+
+'notAEmail@email.com'
+
+last_update = now()
+
+where customer_id = 600;
+
+select *
+
+7
+
+from
+
+customer
+
+00
+
+where
+
+customer_id = 600
+
+100%
+
+25:8
+
+Result Grid
+
+Filter Rows:
+
+Search
+
+Edit:
+
+Export/lmport:
+
+customer_id store_id first_name last_name email
+
+address_idactive
+
+create_date
+
+last_update
+
+600
+
+Junkun
+
+Yang
+
+notAEmail@email.com
+
+2024-09-2414:30:23
+
+2024-09-24 14:35:44
+
+NULL
+
+NULL
+
+NULL
+
+NULL
+
+NULL
+
+NULL
+
+NULL
+
+HULL
+
+NULL
+
+删除第11步新增的那条数据。
+
+delete from customer
+
+where customer_id = 600;
+
+SELECT *
+
+FROM customer
+
+order by customer_id desc;
+
+如图，customer_id = 600的顾客已被删除
+
+Limitto 1000rows
+
+delete from
+
+customer
+
+2
+
+where
+
+customer_id = 600;
+
+4
+
+SELECT
+
+5
+
+FROM
+
+customer
+
+６
+
+order by
+
+customer_id desc;
+
+7
+
+100%
+
+27:6
+
+Result Grid
+
+Filter Rows:
+
+Search
+
+Edit:
+
+Export/lmport:
+
+customer_id store_id first_name
+
+last_name
+
+email
+
+address_id active
+
+create_date
+
+last_update
+
+599
+
+AUSTIN
+
+CINTRON
+
+AUSTIN.CINTRON@sakilacustomer.org
+
+605
+
+2006-02-1422:04:37
+
+2006-02-15 04:57:20
+
+598
+
+WADE
+
+DELVALLE
+
+WADE.DELVALLE@sakilacustomer.org
+
+604
+
+1
+
+2006-02-14 22:04:37
+
+2006-02-1504:57:20
+
+597
+
+FREDDIE
+
+DUGGAN
+
+FREDDIE.DUGGAN@sakilacustomer.org
+
+603
+
+2006-02-1422:04:37
+
+2006-02-1504:57:20
+
+596
+
+1
+
+ENRIQUE
+
+FORSYTHE
+
+ENRIQUE.FORSYTHE@sakilacustomer.org
+
+602
+
+1
+
+2006-02-1422:04:37
+
+2006-02-15 04:57:20
+
+595
+
+TERRENCE
+
+GUNDERSON
+
+TERRENCE.GUNDERSON@sakilacustomer.org
+
+601
+
+2006-02-14 22:04:37
+
+2006-02-15 04:57:20
+
+594
+
+EDUARDO
+
+HIATT
+
+EDUARDO.J
+
+600
+
+2006-02-1422:04:37
+
+2006-02-1504:57:20思考题
+
+如果insert一条数据到actor表，但actor_id和已有数据重复，会发生什么？同学们请自己尝试一下，截图并分析原因。
+
+首先查看到最多200名演员，然后插入actor_id = 200的数据：
+
+Limit to 1000 rows
+
+select
+
+2
+
+from actor
+
+3
+
+order by
+
+actor_id desc
+
+4
+
+100%
+
+1:4
+
+Result Grid
+
+Filter Rows:
+
+Search
+
+Edit:
+
+Export/lmport:
+
+actor_id first_name
+
+last_name
+
+last_update
+
+200
+
+THORA
+
+TEMPLE
+
+2006-02-15 04:34:33
+
+199
+
+JULIA
+
+FAWCETT
+
+2006-02-1504:34:33
+
+198
+
+MARY
+
+KEITEL
+
+2006-02-15 04:34:33
+
+97
+
+REESE
+
+WEST
+
+2006-02-
+
+04-34:33
+
+61
+
+14:39:12
+
+select*fromactorLlMlTo,1ooo
+
+200row(s)returned
+
+0.0011 sec/0.00004...
+
+62
+
+14:39:43
+
+select*fromactororderbyactor_iddescLiMlTo,1oo0
+
+200 row(s)returned
+
+0.0011sec/0.00005...
+
+63
+
+14:42:51
+
+insert into actor (actor_id, first_name, last_name, last_update) values(
+
+200....
+
+Error Code:1062.Duplicate entry'200'forkey'actor...
+
+0.00076sec发现报错：Error Code: 1062. Duplicate entry '200' for key 'actor.PRIMARY'
+
+这是因为actor_id是主键，唯一标识符，不允许重复
+
+insert语句还用了一个函数NOW()，是做什么的呢？
+
+NOW() 返回数据库服务器的当前时间戳，通常包含 日期 和 时间，格式类似于 YYYY-MM-DD HH:MM:SS。
+
+该函数通常用于插入或更新数据库中，需要记录当前时间的字段。
