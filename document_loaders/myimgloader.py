@@ -30,7 +30,7 @@ class RapidOCRLoader(UnstructuredFileLoader):
 
 
 if __name__ == "__main__":
-    loader = RapidOCRLoader(file_path="document_loaders/input/testForimg.jpg")
-    output_txt_path = "document_loaders/output/jpg2txt_output.txt"  # Specify your output file path
+    loader = RapidOCRLoader(file_path="document_loaders/input/testForPNG.png")
+    output_txt_path = "document_loaders/output/png2txt_output.txt"  # Specify your output file path
     loader.save_to_txt(output_txt_path)
     print(f"OCR result saved to {output_txt_path}")
