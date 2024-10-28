@@ -1,6 +1,6 @@
 # MultipleFileLoader
 ## 项目来历
-本仓库的内容仅仅是提取了Langchain-Chatchat项目中FileLoader的内容，并做了一些微小改动，能够进行jpg、docx、pdf、ppt到txt格式的转换方便使用
+本仓库的内容仅仅是提取了Langchain-Chatchat项目中FileLoader的内容，并做了一些微小改动，能够进行jpg、jpeg、png、docx、pdf、pptx到txt格式的转换方便使用
 ## 项目结构
 `input/`为输入的文件夹
 `output/`为输出的txt文件夹
